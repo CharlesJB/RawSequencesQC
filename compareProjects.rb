@@ -6,7 +6,7 @@ require 'rexml/document'
 class Comparator
 	def initialize
 		@data = Hash.new
-		@sources = Hash.new
+		@sources = Array.new
 	end
 
 	def produce_html
@@ -16,14 +16,14 @@ class Comparator
 			puts "<tbody>"
 			puts "<tr><th rowspan=\"2\">Sample</th><th colspan=\""+@sources.size.to_s+"\">Sequences</th></tr>"
 			puts "<tr>"
-			@sources.keys.each do |source|
+			@sources.each do |source|
 				puts "<th>" + source + "</th>"
 			end
 			puts "</tr>"
 
 			project_data.each do |sample, sample_data|
 				puts "<tr><td>"+sample+"</td>"
-				@sources.keys.each do |source|
+				@sources.each do |source|
 					sequences = sample_data[source]
 					puts "<td>" + sequences + "</td>"
 				end
@@ -39,7 +39,7 @@ class Comparator
 
 	def push_xml_file xml_file
 
-		@sources[xml_file] = 1
+		@sources.push xml_file
 
 		file = File.new xml_file
 		root = REXML::Document.new file
