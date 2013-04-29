@@ -24,8 +24,13 @@ class Comparator
 			project_data.each do |sample, sample_data|
 				puts "<tr><td>"+sample+"</td>"
 				@sources.each do |source|
-					sequences = sample_data[source]
-					puts "<td>" + sequences + "</td>"
+					sequences = 0
+					
+					if sample_data.has_key? source
+						sequences = sample_data[source]
+					end
+
+					puts "<td>" + sequences.to_s + "</td>"
 				end
 				puts "</tr>"
 			end
